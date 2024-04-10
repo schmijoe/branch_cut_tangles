@@ -138,65 +138,77 @@ Refname={Theorem,Theorems}]{maintheorem}
 \section{Branch Cut Tangles}
 
 \begin{definition}
-  A \textbf{thin branch cut segment} $\symfrak{v} = ([a,b],v,λ)$ is a line segment $[a,b] ∈ ℝ^n$ labelled with primitive integral vectors $v ∈ ℤ^n$ and $λ ∈ (ℤ^n)^*$ such that $⟨λ,v⟩ = 0$ and that $b-a$ lies in the ray $\{αv \mid α>0\}$.
+  \label{def:bcs}
+  A \textbf{thin branch cut segment} $𝓋 = ([a,b],v,λ)$ is an oriented line segment $[a,b] ⊂ ℝ^n$ labelled with primitive integral vectors $v ∈ ℤ^n$ and $λ ∈ (ℤ^n)^*$ such that $⟨λ,v⟩ = 0$ and that $b-a$ lies in the ray $\{αv \mid α>0\}$.
 
-  We call $\symfrak{v}^{-1} = ([b,a],-v,λ)$ the \textbf{reverse} of $\symfrak{v}$.
+  We call $𝓋^{-1} = ([b,a],-v,λ)$ the \textbf{reverse} of $𝓋$.
 \end{definition}
 
 \begin{definition}
-  To a thin branch cut segment $\symfrak{v} = ([a,b],v,λ)$ we associate its \textbf{resolution function} $\overline{\symfrak{v}} \colon ℝ^n → ℝ^n$ given by
-  \[\overline{\symfrak{v}} x = 
+  \label{def:bcs_resolution}
+  To a thin branch cut segment $𝓋 = ([a,b],v,λ)$ we associate its \textbf{resolution map} $\overline{𝓋} \colon ℝ^n → ℝ^n$ given by the piecewise-linear map
+  \[\overline{𝓋} x = 
     \begin{cases}
       x - v ⟨λ,x-a⟩ & \text{if } ⟨λ,x-a⟩ ≥ 0 \\
       x             & \text{otherwise}
     \end{cases}
   \]
-  or coordinate\-/wise by the tropical polynomials
-  \[(\overline{\symfrak{v}}x)_i = x_i⊙\ab(0⊕a^{λ}⊙x^{-λ})^{v_i} \; .\]
+  or equivalently coordinate\-/wise by the tropical rational functions
+  \[(\overline{𝓋}x)_i = \ab(0⊕a^{λ}⊙x^{-λ})^{v_i} ⊙ x_i \; .\]
 
-  If $\symfrak{u} = ([c,d],u,μ)$ is a thin branch cut segment such that the open line segments $(a,b)$ and $(c,d)$ don't intersect, we write by abuse of notation
-  \[\overline{\symfrak{v}} \symfrak{u} = 
+  If $𝓊 = ([c,d],u,μ)$ is another thin branch cut segment, we write
+  \[\overline{𝓋} 𝓊 = 
     \begin{cases}
-      \ab([\overline{\symfrak{v}}c, \overline{\symfrak{v}}d],
-      \overline{\symfrak{v}}u,
+      \ab([\overline{𝓋}c, \overline{𝓋}d],
+      \overline{𝓋}u,
       μ + λ ⟨μ,v ⟩)
-      & \text{if } [c,d] ⊂ \{ x \mid ⟨λ,x-a ⟩\} \\
-      \symfrak{u}  & \text{otherwise}
+      & \text{if } [c,d] ⊂ \{ x \mid ⟨λ,x-a ⟩ ≥ 0\} \\
+      𝓊
+      & \text{if } [c,d] ⊂ \{ x \mid ⟨λ,x-a ⟩ ≤ 0\} \\
+      \text{undefined} & \text{otherwise}
     \end{cases} \;.\]
 \end{definition}
-Note that $\overline{\symfrak{v}^{-1}}=\overline{\symfrak{v}}^{-1}$.
+
+\begin{remark}
+  The map $μ ↦ μ + λ ⟨μ,v ⟩$ is the dual-inverse of the linear map $x ↦ x - v ⟨λ,x⟩$.
+Note that $\overline{𝓋^{-1}}=\overline{𝓋}^{-1}$.
+
+If $𝓊 = ([c,d],u,μ), 𝓋 =([a,b],v,λ)$ satisfy $[a,b] = [c,d]$ as sets, we say they \textbf{coincide}. In this case $\overline{u}$ and $\overline{v}$ commute.
+\end{remark}
 
 \begin{definition}
-  A \textbf{thin branch cut stack} $S$ at $x ∈ ℝ^n$ of height $m$ is a $m$-tuple of pairs of thin branch cut segments $((\symfrak{v}_{01},\symfrak{v}_{02}),…,(\symfrak{v}_{m1},\symfrak{v}_{m2}))$, satisfying the following:
-  Write $\symfrak{v}_{ij} = ([a_{ij},b_{ij}],v_{ij},λ_{ij})$.
+  \label{def:stack}
+  A \textbf{thin branch cut stack} $𝒮$ at $x ∈ ℝ^n$ of height $m$ is a $m$-tuple of pairs of thin branch cut segments $((𝓋_{01},𝓋_{02}),…,(𝓋_{m1},𝓋_{m2}))$, satisfying the following:
+  Write $𝓋_{ij} = ([a_{ij},b_{ij}],v_{ij},λ_{ij})$.
   \begin{enumerate}
     \item $b_{i1} = a_{i2} = x$.
-    \item (Top is straight) $v_{01} = v_{02}$ and $λ_{01} = λ_{01}$.
+    \item (Top is straight) $v_{01} = v_{02}$ and $λ_{01} = λ_{02}$.
     \item (NCAS\footnote{Node collision avoidance system}) If $λ_{ij} = ± λ_{kl}$ then $v_{ij}=v_{kl}$ or $v_{ij}=-v_{kl}$.
-    \item (Reduction) If $m>0$ then $((\overline{\symfrak{v}_{01}} \symfrak{v}_{11}, \overline{\symfrak{v}_{01}} \symfrak{v}_{12}), …, (\overline{\symfrak{v}_{01}} \symfrak{v}_{m1}, \overline{\symfrak{v}_{01}} \symfrak{v}_{m2}))$ is a thin branch cut stack of height $m-1$.\label{itm:stack_reduce}
+    \item (Reduction) If $m>0$ then $((\overline{𝓋_{01}} 𝓋_{11}, \overline{𝓋_{01}} 𝓋_{12}), …, (\overline{𝓋_{01}} 𝓋_{m1}, \overline{𝓋_{01}} 𝓋_{m2}))$ is a thin branch cut stack of height $m-1$.\label{itm:stack_reduce}
   \end{enumerate}
 
-  Reducing the height of a stack as in \cref{itm:stack_reduce}, we apply the resolution function $u_0 = \overline{\symfrak{v}_{01}}$.
-  Repeatedly reducing the height until the stack is empty, we successively apply resolution functions
+  Reducing the height of a stack as in \cref{itm:stack_reduce}, we apply the resolution map $u_0 = \overline{𝓋_{01}}$.
+  Repeatedly reducing the height until the stack is empty, we successively apply resolution maps
   \[
-    u_0 = \overline{\symfrak{v}_{01}}\;, \quad
-    u_1 = \overline{\overline{\symfrak{v}_{01}} \symfrak{v}_{11}}\;, \quad
+    u_0 = \overline{𝓋_{01}}\;, \quad
+    u_1 = \overline{\overline{𝓋_{01}} 𝓋_{11}}\;, \quad
     …\;, \quad
-    u_m = \overline{\overline{\overline{\overline{ \symfrak{v}_{01}} \symfrak{v}_{11}} \symfrak{v}_{21}} … \symfrak{v}_{m1}} \;.
+    u_m = \overline{\overline{\overline{\overline{ 𝓋_{01}} 𝓋_{11}} 𝓋_{21}} … 𝓋_{m1}} \;.
   \]
-  The composition $u_m ∘ … ∘ u_1 ∘ u_0$ is called the \textbf{resolution function} of $S$.
+  The composition $u_m ∘ … ∘ u_1 ∘ u_0$ is called the \textbf{resolution map} of $𝒮$.
 \end{definition}
-
 
 \begin{definition}
-  A \textbf{thin branch cut tangle} $\symfrak{T} ⊂ Δ$ is an embedded directed graph $(C,B)$ where the edges $B$ are thin branch cuts segments, and every vertex $x ∈ C$ belongs to one of the following classes:
-  \begin{enumerate}
-    \item Start: $\deg(x) = (0,1)$, $x ∈ Δ^{n-2}$ and the outgoing segment $\symfrak{v}$ satisfies $λ = λ_1-λ_2$.
-    \item End: $\deg(x) = (1,0)$.
-    \item U-Turn: $\deg(x) = (1,1)$, and the adjacent edges $\symfrak{v}_1, \symfrak{v}_2$ satisfy $\symfrak{v}_1^{-1} = \symfrak{v}_2$.
-    \item Stack of height $m$: $\deg(x) = (m,m)$, and the adjacent edges arrange into a thin branch cut stack of height $m$.
-  \end{enumerate}
+  \label{def:bct}
+  A \textbf{thin branch cut tangle} $𝒯 ⊂ Δ$ is an embedded directed graph $(C,B)$ where the edges $B$ are thin branch cuts segments, and every vertex $x ∈ C$ belongs to one of the following classes:
+  \begin{description}
+    \item[Start] $\deg(x) = (0,1)$, $x ∈ Δ^{n-2} ∖ Δ^{n-3}$ with the $n-1$-faces adjacent to $x$ having primitive normal vectors $λ_1,λ_2$ and the outgoing segment $𝓋 = ([x,b],v,λ)$ satisfies $λ = λ_1-λ_2$ and $⟨λ_1,v ⟩ = ⟨ λ_2,v ⟩ = 1$.
+    \item[End] $\deg(x) = (m,0)$ and all adjacent edges coincide.
+    \item[U-Turn] $\deg(x) = (m,m)$, all adjacent edges coincide and arrange into pairs $𝓋_1, 𝓋_2$ satisfying $𝓋_1^{-1} = 𝓋_2$.
+    \item[Stack] $\deg(x) = (m,m)$, and the adjacent edges arrange into a thin branch cut stack of height $m$.
+  \end{description}
 \end{definition}
+
 
 
 \end{document}
