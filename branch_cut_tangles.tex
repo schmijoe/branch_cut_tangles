@@ -132,9 +132,186 @@ Refname={Theorem,Theorems}]{maintheorem}
 
 \begin{document}
 \title{Branch Cut Tangles}
-\author{Jo}
+\author{Joel Schmitz}
 \maketitle
 
+\section{Branch Cut Tangles}
 
+\begin{definition}
+  A \textbf{thin branch cut segment} $\symfrak{v} = ([a,b],v,λ)$ is a line segment $[a,b] ∈ ℝ^n$ labelled with primitive integral vectors $v ∈ ℤ^n$ and $λ ∈ (ℤ^n)^*$ such that $⟨λ,v⟩ = 0$ and that $b-a$ lies in the ray $\{αv \mid α>0\}$.
+
+  We call $\symfrak{v}^{-1} = ([b,a],-v,λ)$ the \textbf{reverse} of $\symfrak{v}$.
+\end{definition}
+
+\begin{definition}
+  To a thin branch cut segment $\symfrak{v} = ([a,b],v,λ)$ we associate its \textbf{resolution function} $\overline{\symfrak{v}} \colon ℝ^n → ℝ^n$ given by
+  \[\overline{\symfrak{v}} x = 
+    \begin{cases}
+      x - v ⟨λ,x-a⟩ & \text{if } ⟨λ,x-a⟩ ≥ 0 \\
+      x             & \text{otherwise}
+    \end{cases}
+  \]
+  or coordinate\-/wise by the tropical polynomials
+  \[(\overline{\symfrak{v}}x)_i = x_i⊙\ab(0⊕a^{λ}⊙x^{-λ})^{v_i} \; .\]
+
+  If $\symfrak{u} = ([c,d],u,μ)$ is a thin branch cut segment such that the open line segments $(a,b)$ and $(c,d)$ don't intersect, we write by abuse of notation
+  \[\overline{\symfrak{v}} \symfrak{u} = 
+    \begin{cases}
+      \ab([\overline{\symfrak{v}}c, \overline{\symfrak{v}}d],
+      \overline{\symfrak{v}}u,
+      μ + λ ⟨μ,v ⟩)
+      & \text{if } [c,d] ⊂ \{ x \mid ⟨λ,x-a ⟩\} \\
+      \symfrak{u}  & \text{otherwise}
+    \end{cases} \;.\]
+\end{definition}
+Note that $\overline{\symfrak{v}^{-1}}=\overline{\symfrak{v}}^{-1}$.
+
+\begin{definition}
+  A \textbf{thin branch cut stack} $S$ at $x ∈ ℝ^n$ of height $m$ is a $m$-tuple of pairs of thin branch cut segments $((\symfrak{v}_{01},\symfrak{v}_{02}),…,(\symfrak{v}_{m1},\symfrak{v}_{m2}))$, satisfying the following:
+  Write $\symfrak{v}_{ij} = ([a_{ij},b_{ij}],v_{ij},λ_{ij})$.
+  \begin{enumerate}
+    \item $b_{i1} = a_{i2} = x$.
+    \item (Top is straight) $v_{01} = v_{02}$ and $λ_{01} = λ_{01}$.
+    \item (NCAS\footnote{Node collision avoidance system}) If $λ_{ij} = ± λ_{kl}$ then $v_{ij}=v_{kl}$ or $v_{ij}=-v_{kl}$.
+    \item (Reduction) If $m>0$ then $((\overline{\symfrak{v}_{01}} \symfrak{v}_{11}, \overline{\symfrak{v}_{01}} \symfrak{v}_{12}), …, (\overline{\symfrak{v}_{01}} \symfrak{v}_{m1}, \overline{\symfrak{v}_{01}} \symfrak{v}_{m2}))$ is a thin branch cut stack of height $m-1$.\label{itm:stack_reduce}
+  \end{enumerate}
+
+  Reducing the height of a stack as in \cref{itm:stack_reduce}, we apply the resolution function $u_0 = \overline{\symfrak{v}_{01}}$.
+  Repeatedly reducing the height until the stack is empty, we successively apply resolution functions
+  \[
+    u_0 = \overline{\symfrak{v}_{01}}\;, \quad
+    u_1 = \overline{\overline{\symfrak{v}_{01}} \symfrak{v}_{11}}\;, \quad
+    …\;, \quad
+    u_m = \overline{\overline{\overline{\overline{ \symfrak{v}_{01}} \symfrak{v}_{11}} \symfrak{v}_{21}} … \symfrak{v}_{m1}} \;.
+  \]
+  The composition $u_m ∘ … ∘ u_1 ∘ u_0$ is called the \textbf{resolution function} of $S$.
+\end{definition}
+
+
+\begin{definition}
+  A \textbf{thin branch cut tangle} $\symfrak{T} ⊂ Δ$ is an embedded directed graph $(C,B)$ where the edges $B$ are thin branch cuts segments, and every vertex $x ∈ C$ belongs to one of the following classes:
+  \begin{enumerate}
+    \item Start: $\deg(x) = (0,1)$, $x ∈ Δ^{n-2}$ and the outgoing segment $\symfrak{v}$ satisfies $λ = λ_1-λ_2$.
+    \item End: $\deg(x) = (1,0)$.
+    \item U-Turn: $\deg(x) = (1,1)$, and the adjacent edges $\symfrak{v}_1, \symfrak{v}_2$ satisfy $\symfrak{v}_1^{-1} = \symfrak{v}_2$.
+    \item Stack of height $m$: $\deg(x) = (m,m)$, and the adjacent edges arrange into a thin branch cut stack of height $m$.
+  \end{enumerate}
+\end{definition}
+
+
+\section{Invariant}
+
+\begin{definition}
+  Suppose that $L$ is a compact Lagrangian submanifold in a symplectic manifold $(X,\omega)$ that is geometrically bounded.
+Furthermore, let $J \in \symcal{J}_{\text{geo}}(X,\omega)$ be a geometrically bounded almost complex structure.
+Define
+  \begin{align*}
+    σ_D(X,L,J) &≔ \inf \ab\{ \int_{D} u^* \omega \;\middle|\, \parbox{15em}{\centering $u\colon(D,\partial D)\to(X,L)$\\non-constant $J$-holomorphic disc} \} \\
+    σ_S(X,J) &≔ \inf \ab\{ \int_{S^2} u^* \omega \,\middle|\, \parbox{15em}{\centering $u\colon S^2 \to X$\\ non-constant $J$-holomorphic sphere} \} \; .
+  \end{align*}
+  These two quantities may be equal to infinity, if the infimum is taken over an empty set.
+  We have that $\sigma_D, \sigma_S > 0$ in the case that $X$ is geometrically bounded. This is proven, for example, in \cite[Proposition 4.3.1 (iii) and Proposition 4.7.2 (iii)]{sikorav1994}.
+\end{definition}
+
+\begin{theorem}[Chekanov 1998 \cite{chekanov1998}]
+  \label{thm:chekanov}
+  Let $L$ be a compact Lagrangian submanifold of a geometrically bounded symplectic manifold $(X,ω)$.
+For every geometrically bounded almost complex structure $J$, the displacement energy satisfies
+  \[e(L) ≥ \min\ab\{σ_D(X,L,J),σ_S(X,J)\}.\]
+\end{theorem}
+
+Let $𝓙_{\text{geo}}(X,ω)$ be the space of geometrically bounded almost complex structures.
+
+Set $σ_D(X,L) = \sup_{J ∈ 𝓙_{\text{geo}(X,ω)}} \{ σ_D(X,J,L) \} $ .
+
+\begin{lemma}
+  Let $φ \colon X → X$ be a symplectomorphism.
+  Then $σ_D(X,φ(L)) = σ_D(X,L)$.
+\end{lemma}
+
+\begin{proof}
+  We have $σ_D(X,L,J) = σ_D(X,φ(L),φ_* J)$ for some fixed $J ∈ 𝒥_\text{geo}(X,ω)$.
+  As the sets $𝒥_\text{geo}(X,ω)$ and $φ_* 𝒥_\text{geo}(X,ω)$ are the same, the result follows.
+\end{proof}
+
+\begin{lemma}
+  The germ $[σ_D]_L \colon H^1(L;ℝ) \dasharrow ℝ$ is given by a tropical polynomial.
+\end{lemma}
+
+\todo{Beweis von dem.}
+
+Let $(X,ω_X)$ be a $2n$-dimensinal symplectic manifold, and let $μ$ be a Hamiltonian generating a Hamiltonian $T^k$ action $φ_θ \colon X → X$ (with $k ≤n$).
+Let $π \colon μ^{-1}(c)=X_c → (Y,ω_Y)$ be the symplectic reduction at a regular value $c$.
+
+\begin{lemma}
+  Let $J$ be a $ω_X$-tame (resp.\ $ω_X$-compatible) almost complex structure on $X$ such that
+  \begin{equation}
+    \label{eq:holomorphic_action}
+    Dφ_θ ∘ J_X = J_X ∘ Dφ_θ
+  \end{equation}
+  on $TX|_{X_c}$.
+
+  Then there is a unique $ω_Y$-tame (resp.\ $ω_X$-compatible) almost complex structure on $Y$ such that $Dπ ∘ J_X = J_Y ∘ Dπ$
+\end{lemma}
+
+\begin{proof}
+  We can set $J_Y ≔ Dπ ∘ J_X ∘ Dπ^{-1}$, as by \eqref{eq:holomorphic_action} the choice of preimage of $Dπ$ does not matter.
+\end{proof}
+
+\begin{lemma}
+  Let $J_Y$ be a $ω_Y$-tame (resp.\ $ω_Y$-compatible) almost complex structure on $Y$.
+  Then there is a $ω_X$-tame (resp.\ $ω_X$-compatible) almost complex structure on $X$ such that
+  $Dπ ∘ J_X = J_Y ∘ Dπ$.
+\end{lemma}
+
+\begin{proof}
+  Let $V_1,…,V_k$ be the non-zero Hamiltonian vector fields generated by $μ_1,…,μ_k$ and $V → X_c$ the vector bundle spanned by them, and take any $ω_X$-compatible almost complex structure $J$ on $X$.
+  The bundle $TX|_{X_c}$ splits as follows:
+  \[TX|_{X_c} = π^*TY ⊕  (V ⊕  JV)\]
+  Define $J_X ≔ π_* J_Y ⊕ J|_{V ⊕ JV}$ on $TX|_{X_c}$ and choose a $ω$-tame (resp. $ω$-compatible) extension.
+\end{proof}
+
+Take $(ℂ^N,ω_0)$ with $ω_0$ the standard symplectic structure and let $μ_0 \colon ℂ^N → ℝ_{≥0}^N$ be the usual moment map given by
+\[μ_0(z_1,…,z_N) =  (π\abs{z_1}^2,…,π\abs{z_N}^2)\;.\]
+
+\begin{lemma}
+  For any $J ∈ J_\text{geo}(X,ω)$ we have
+  \[
+    σ_D(ℂ^N,μ_0^{-1}(x)) = σ_D(ℂ^N, μ_0^{-1}(a), i) = e(μ_0^{-1}(a)) = \min_i\{a_i\} \; .
+  \]
+\end{lemma}
+
+\begin{proof}
+  As $ℂ^N$ is contractible, $σ_S(ℂ^N, J) = ∞$ for all $J ∈ 𝒥_\text{geo}(ℂ^N,ω_0)$. Using probes, we get $e(μ_0^{-1}(a)) ≤ \min_i\{a_i\}$. \Cref{thm:chekanov} gives us $σ_D(ℂ^N, J, μ_0^{-1}(a)) ≤ e(μ_0^{-1}(a)) ≤ \min_i\{a_i\}$ for all $J ∈ 𝒥_\text{geo}(ℂ^N,ω_0)$.
+
+  Take $i$ to be the standard almost complex structure on $ℂ^N$.
+  The coordinate projections $π_i \colon ℂ^N → ℂ$ are holomorphic, so any $i$-disk $u \colon (D,∂D) → (ℂ^N,μ_0^{-1}(a))$ gives a holomorphic map $π_i ∘ u\colon (D, ∂D) → (D(a_i), ∂D(a_i))$, where $D(a_i)$ denotes the disk with area $a_i$.
+  The area $ω_0(u)$ can be expressed as
+  \[ω_0(u) = ∑_{i=1}^N ω_0(π_i ∘ u) = ∑_{i=1}^N c^i a_i \; ,\]
+  where $c^i$ are positive integer coefficients corresponding to the degree of $π_i ∘ u$.
+  Thus $σ_D(ℂ^N, i, μ_0^{-1}(a)) ≥ \min_i\{a_i\}$, and using the previous paragraph we get equality $σ_D(ℂ^N, i, μ_0^{-1}(a)) = \min_i\{a_i\}$.
+\end{proof}
+
+\begin{lemma}
+  Let $(Y,ω,μ)$ be a toric symplectic manifold, with moment polytope $Δ$ given by the intersection of half-spaces $\{ ℓ_i(y) ≥ 0\}_{1 ≤i ≤N}$, where $ℓ_i(y) = ⟨λ_i,y ⟩ + c_i ≥0$.
+  Then $σ_D(X,μ^{-1}(y)) = \min_i{ℓ_i(y)}$.
+\end{lemma}
+
+\begin{proof}
+  Using Delzant's construction we can view $Y$ as a symplectic reduction of $ℂ^N$.
+  Let $π : ℂ^N ⊃ X_c = H_ξ^{-1}(c) → Y$ be the corresponding projection.
+  Let $i_Δ \colon Δ → ℝ^N_{≥0}$ be the inclusion of the moment polytope ...
+  Let $s_0 \colon ℝ^N_{≥0} → ℂ^N$ be a Lagrangian section of $μ_0$.
+  Then $s = π ∘ s_0 ∘ i_Δ$ is a Lagrangian section of $μ$.
+
+  Take any $J ∈ 𝒥_\text{geo}(Y,ω)$.
+  Take any $\tilde{J} ∈ 𝒥_\text{geo}(ℂ^n,ω_0)$ such that $J ∘ Dπ = Dπ ∘ \tilde{J}$.\footnote{This does exist, can you choose it to be geometrically bounded when $Y$ is non-compact?}
+  Then for any $J$-disk $u \colon (D,∂D) → (Y,L)$, the pullback bundle $u^* X_c$ trivial, so there is a section $\tilde{u} (D,∂D) → X_c$.\todo{should be $\tilde{J}$-holomorphic.}
+  So $σ_D(Y,μ^{-1}(y),J) ≥ σ_D(ℂ^N,π^{-1}(μ^{-1}(y)),\tilde{J})$.
+
+  As the standard almost complex structure $i$ satisfies $i ∘ Dφ_θ = Dφ_θ ∘ i$, $σ_D(Y,μ^{-1}(y)) ≥ σ_D(ℂ^N,π^{-1}(μ^{-1}(y))) = \min_i\{ ℓ_i(y) \}$.\todo{Biste dir sicher???}
+
+  For $σ_D(Y,μ^{-1}(y), J) ≤ \min_i\{ ℓ_i(y) \}$
+\end{proof}
 
 \end{document}
