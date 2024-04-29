@@ -52,7 +52,7 @@
 
 % Bibliography
 \usepackage[style=numeric-comp,url=false,isbn=false]{biblatex}
-%\addbibresource{bibliography.bib}
+\addbibresource{bibliography.bib}
 
 % For general figures
 \usepackage[final]{graphicx}
@@ -135,7 +135,8 @@ Refname={Theorem,Theorems}]{maintheorem}
 \author{Joel Schmitz}
 \maketitle
 
-\section{Branch Cut Tangles}
+\section{Thin Branch Cut Tangles}
+
 
 \begin{definition}
   \label{def:bcs}
@@ -146,7 +147,7 @@ Refname={Theorem,Theorems}]{maintheorem}
 
 \begin{definition}
   \label{def:bcs_resolution}
-  To a thin branch cut segment $𝓋 = ([a,b],v,λ)$ we associate its \textbf{resolution map} $\overline{𝓋} \colon ℝ^n → ℝ^n$ given by the piecewise-linear map
+  To a thin branch cut segment $𝓋 = ([a,b],v,λ)$ we associate its \textbf{resolution map} $\overline{𝓋} \colon ℝ^n → ℝ^n$ given by the piecewise affine linear map
   \[\overline{𝓋} x = 
     \begin{cases}
       x - v ⟨λ,x-a⟩ & \text{if } ⟨λ,x-a⟩ ≥ 0 \\
@@ -154,14 +155,14 @@ Refname={Theorem,Theorems}]{maintheorem}
     \end{cases}
   \]
   or equivalently coordinate\-/wise by the tropical rational functions
-  \[(\overline{𝓋}x)_i = \ab(0⊕a^{λ}⊙x^{-λ})^{v_i} ⊙ x_i \; .\]
+  \[(\overline{𝓋}x)_i = \ab(0⊕a^{λ}⊙x^{-λ})^{-v_i} ⊙ x_i \; .\]
 
   If $𝓊 = ([c,d],u,μ)$ is another thin branch cut segment, we write
   \[\overline{𝓋} 𝓊 = 
     \begin{cases}
       \ab([\overline{𝓋}c, \overline{𝓋}d],
-      \overline{𝓋}u,
-      μ + λ ⟨μ,v ⟩)
+      u - v ⟨λ,u⟩,
+      μ + λ ⟨μ,v⟩)
       & \text{if } [c,d] ⊂ \{ x \mid ⟨λ,x-a ⟩ ≥ 0\} \\
       𝓊
       & \text{if } [c,d] ⊂ \{ x \mid ⟨λ,x-a ⟩ ≤ 0\} \\
@@ -173,7 +174,7 @@ Refname={Theorem,Theorems}]{maintheorem}
   The map $μ ↦ μ + λ ⟨μ,v ⟩$ is the dual-inverse of the linear map $x ↦ x - v ⟨λ,x⟩$.
 Note that $\overline{𝓋^{-1}}=\overline{𝓋}^{-1}$.
 
-If $𝓊 = ([c,d],u,μ), 𝓋 =([a,b],v,λ)$ satisfy $[a,b] = [c,d]$ as sets, we say they \textbf{coincide}. In this case $\overline{u}$ and $\overline{v}$ commute.
+If $𝓊 = ([c,d],u,μ), 𝓋 =([a,b],v,λ)$ satisfy $[a,b] = [c,d]$ as sets, we say they \textbf{coincide}. In this case $\overline{𝓊}$ and $\overline{𝓋}$ commute.\todo{When do $𝓊$ and $𝓋$ commute?}
 \end{remark}
 
 \begin{definition}
@@ -183,7 +184,7 @@ If $𝓊 = ([c,d],u,μ), 𝓋 =([a,b],v,λ)$ satisfy $[a,b] = [c,d]$ as sets, we
   \begin{enumerate}
     \item $b_{i1} = a_{i2} = x$.
     \item (Top is straight) $v_{01} = v_{02}$ and $λ_{01} = λ_{02}$.
-    \item (NCAS\footnote{Node collision avoidance system}) If $λ_{ij} = ± λ_{kl}$ then $v_{ij}=v_{kl}$ or $v_{ij}=-v_{kl}$.
+    \item (NCAS\footnote{Node collision avoidance system}) If $⟨λ_{ij},v_{kl} ⟩ = 0$ then $v_{ij}= ± v_{kl}$.
     \item (Reduction) If $m>0$ then $((\overline{𝓋_{01}} 𝓋_{11}, \overline{𝓋_{01}} 𝓋_{12}), …, (\overline{𝓋_{01}} 𝓋_{m1}, \overline{𝓋_{01}} 𝓋_{m2}))$ is a thin branch cut stack of height $m-1$.\label{itm:stack_reduce}
   \end{enumerate}
 
@@ -209,6 +210,60 @@ If $𝓊 = ([c,d],u,μ), 𝓋 =([a,b],v,λ)$ satisfy $[a,b] = [c,d]$ as sets, we
   \end{description}
 \end{definition}
 
+\section{Realizing a thin branch cut tangle}
 
+\subsection{Neighbourhood of a focus-focus fibre}
+
+Let $π \colon (X,ω) → O$ be an almost toric fibration.
+
+Then by \cite[Proposition~5.4]{Zun96} the set $N$ of (codimension 2 non-degenerate topologically stable) focus-focus singular values in $B$ is a $n-2$ dimensional submanifold called \textbf{nodes} of $π$.
+
+For some open set $U ⊂ O$, given a covector field $ξ ∈ T^*U$, we get a Hamiltonian $ℝ$-action $φ_ξ^t$ on $π^{-1}(U)$ by the Hamiltonian vector field $ι_{X_ξ} ω = d(f ∘ π) = ξ ∘ Dπ$, as locally we may write $ξ=df$.
+We define the \textbf{affine monodromy sheaf} $𝒫$ by setting
+\[𝒫(U) = \{ξ ∈ T^*U \mid φ_ξ^1 = \id \} \; .\]
+
+\begin{remark}
+  Equivalently, we may also define $𝒫$ as the sheaf of system-preserving Hamiltonian $S¹$-actions, as is quickly verified.
+  Thus the $𝒫$ is indeed the same thing as the \emph{affine monodromy sheaf} in \cite{Zun03}.
+  The letter $𝒫$ comes from the fact that $𝒫(U)$ marks the periodic Hamiltonian $ℝ$-actions in $T^*U$, and in analogy of the \emph{period lattice}.
+\end{remark}
+
+If $U ⊂ O ∖ N$ is a disk (thus only containing regular and elliptic values), then $𝒫(U) ≅ ℤ^n$ and a basis $(g_1,…,g_n)$ gives action-coordinates $(f_1,…,f_n)$ on $U$ by choosing $f_i$ such that $g_i = df_i$.
+In the case where $U$ only contains regular values this is the classical Arnold-Liouville Theorem, the case with elliptic values is treated in e.g.\ \cite{DuMo91}.
+See also the discussion around \cite[Theorem 3.9]{Zun96}.
+This also equips $O ∖ N$ with an integral affine structure, by requiring charts $(U_i,φ_i)_{i ∈ I}$ to satisfy $φ_i^* 𝒫(U_i ∩ U_j) = ℤ^n ⊂ T^*ℝ^n$.\footnote{The atlas defined by such charts may not be compatible with the original smooth structure of $O$ near $∂O$…}
+
+While we cannot extend the integral affine structure or action coordinates to $N$, we can at least do so partially:
+Let $U ⊂ O$ be a disk such that $N ∩ U$ is non-empty and connected.
+By \cite[Proposition 5.2 a)]{Zun96} $𝒫(U) ≅ ℤ^{n-1}$, giving rise to $n-1$ action coordinates $(f_1,…,f_{n-1})$, unique up to $n-1$ integral affine transformations, and the inclusion $𝒫(U) → 𝒫(U ∖ N)$.
+By \cite[Proposition 5.2 b) and Proposition 5.4 a)]{Zun96}, there is a unique $S¹$-action $λ ∈ 𝒫(U)$ fixing the set of focus-focus singularities in $π^{-1}(U)$ pointwise and which is free elsewhere.
+Take $ζ ∈ ⋀^{n-2}𝒫(U) ⊂ Ω^{n-2}(U)$ such that $λ ∧ ζ ≠ 0 ∈ ⋀^{n-1}𝒫(U)$ is primitive (i.e.\ it is represented by a basis of $𝒫(U)$).
+Then the subspace $\{v \mid ι_v λ ∧ ζ = 0\} ⊂ T_x O$ is 1D. Is there a primitive generator? What is the affine structure on $TO$?
+
+
+
+\begin{lemma}[{\cite[Theorem~2.26]{evans2021atfs}}]
+  If $f \colon X → B$ and $g \colon Y → B$ are regular Lagrangian fibrations over the same base, both admitting global Lagrangian sections $σ$ and $τ$.
+  Then there is a unique fibred symplectomorphism $Φ \colon X → Y$ such that $Φ ∘ σ = τ$.
+\end{lemma}
+
+\todo{What is a focus-focus singularity?}
+
+\begin{definition}[{\cite[Definition~8.1]{evans2021atfs}}]
+  An almost toric fibration is a Lagrangian fibration $f \colon X → B$ on a $2n$-dimensional symplectic manifold such that $B$ is also a smooth manifold (with corners), and for $d ∈ \{1,…,n-3,n-1\}$ the $d$-stratum $S_d(B)$ consist of toric critical points, and the $S_{n-2}$ consist of toric and focus-focus critical points.
+\end{definition}
+
+\begin{lemma}[{\cite[Remark~6.9]{evans2021atfs}}]
+  Let $N ⊂ B$ be the $n-2$ dimensional submanifold consisting of focus-focus singularites. Then the monodromy generated by a small loop around a point $x ∈ N$ in $B^\text{reg}$ is given by a shear map of the form
+  \[
+    S_{v,λ} = \id + vλ \; .
+  \]
+\end{lemma}
+
+Let $B^\text{reg}$ be the set of regular values of an almost toric fibration $f$, $\tilde{B^\text{reg}}$ its universal cover and let $I \colon \tilde{B^\text{reg}} → ℝ^n$ be the flux map. Let $D ⊂ \tilde{B^\text{reg}}$ be a fundamental domain for the action of $π_1(B^\text{reg})$.
+
+\section{Resolution Groups}
+
+Ask Virginie Charette, William Goldman
 
 \end{document}
