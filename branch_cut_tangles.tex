@@ -220,47 +220,53 @@ Then by \cite[Proposition~5.4]{Zun96} the set $N$ of (codimension 2 non-degenera
 
 For some open set $U ⊂ O$, given a covector field $ξ ∈ T^*U$, we get a Hamiltonian $ℝ$-action $φ_ξ^t$ on $π^{-1}(U)$ by the Hamiltonian vector field $ι_{X_ξ} ω = d(f ∘ π) = ξ ∘ Dπ$, as locally we may write $ξ=df$.
 We define the \textbf{affine monodromy sheaf} $𝒫$ by setting
-\[𝒫(U) = \{ξ ∈ T^*U \mid φ_ξ^1 = \id \} \; .\]
+\[𝒫(U) = \{ξ ∈ Γ(T^*U) \mid φ_ξ^1 = \id \} \; ,\]
+and its dual $𝒫^*$ by
+\[𝒫^*(U) = \{ v ∈ Γ(TU) \mid ∀ ξ ∈ 𝒫(U)\colon ξv ∈ ℤ  \} \; .\]
 
 \begin{remark}
   Equivalently, we may also define $𝒫$ as the sheaf of system-preserving Hamiltonian $S¹$-actions, as is quickly verified.
   Thus the $𝒫$ is indeed the same thing as the \emph{affine monodromy sheaf} in \cite{Zun03}.
-  The letter $𝒫$ comes from the fact that $𝒫(U)$ marks the periodic Hamiltonian $ℝ$-actions in $T^*U$, and in analogy of the \emph{period lattice}.
+  The letter $𝒫$ comes from the fact that $𝒫(U)$ marks the periodic Hamiltonian $ℝ$-actions in $T^*U$, in analogy of the \emph{period lattice} (see e.g.\ \cite[Section 1.4]{Eva19}).
+
+  As well as identifying $𝒫(U)$ with system-preserving $S¹$-actions, we may identify $𝒫(U)^k$ with system-preserving $T^k$-actions.
 \end{remark}
 
-If $U ⊂ O ∖ N$ is a disk (thus only containing regular and elliptic values), then $𝒫(U) ≅ ℤ^n$ and a basis $(g_1,…,g_n)$ gives action-coordinates $(f_1,…,f_n)$ on $U$ by choosing $f_i$ such that $g_i = df_i$.
+If $U ⊂ O ∖ N$ (thus only containing regular and elliptic values) is open and contractible, then $𝒫(U) ≅ 𝒫^*(U) ≅ ℤ^n$ and a basis $(ξ_1,…,ξ_n)$ of $𝒫(U)$ locally defines an \textbf{integral affine chart} $f=(f_1,…,f_n)$ up to a constant $c ∈ ℝ^n$ by choosing $df_i = ξ_i$.
 In the case where $U$ only contains regular values this is the classical Arnold-Liouville Theorem, the case with elliptic values is treated in e.g.\ \cite{DuMo91}.
 See also the discussion around \cite[Theorem 3.9]{Zun96}.
-This also equips $O ∖ N$ with an integral affine structure, by requiring charts $(U_i,φ_i)_{i ∈ I}$ to satisfy $φ_i^* 𝒫(U_i ∩ U_j) = ℤ^n ⊂ T^*ℝ^n$.\footnote{The atlas defined by such charts may not be compatible with the original smooth structure of $O$ near $∂O$…}
+Replacing the smooth atlas of $O ∖ N$ by affine charts, $O ∖ N$ is an integral affine manifold.\footnote{The atlas defined by such charts may not be compatible with the original smooth structure of $O$ near $∂O$…}
 
 While we cannot extend the integral affine structure or action coordinates to $N$, we can at least do so partially:
-Let $U ⊂ O$ be a disk such that $N ∩ U$ is non-empty and connected.
-By \cite[Proposition 5.2 a)]{Zun96} $𝒫(U) ≅ ℤ^{n-1}$, giving rise to $n-1$ action coordinates $(f_1,…,f_{n-1})$, unique up to $n-1$ integral affine transformations, and the inclusion $𝒫(U) → 𝒫(U ∖ N)$.
+Let $U ⊂ O$ be open and contractible such that $N ∩ U$ is non-empty and connected.
+By \cite[Proposition 5.2 a)]{Zun96} $𝒫(U) ≅ ℤ^{n-1}$ and $𝒫^*(U) ≅ ℤ^{n-1} × ℝ$\todo{$ℝ$ komponente trivial??}.
+A basis $(ξ_2,…,ξ_n)$ of $𝒫(U)$ gives rise to $n-1$ action coordinates $(f_2,…,f_n)$.
 By \cite[Proposition 5.2 b) and Proposition 5.4 a)]{Zun96}, there is a unique $S¹$-action $λ ∈ 𝒫(U)$ fixing the set of focus-focus singularities in $π^{-1}(U)$ pointwise and which is free elsewhere.
-Take $ζ ∈ ⋀^{n-2}𝒫(U) ⊂ Ω^{n-2}(U)$ such that $λ ∧ ζ ≠ 0 ∈ ⋀^{n-1}𝒫(U)$ is primitive (i.e.\ it is represented by a basis of $𝒫(U)$).
-Then the subspace $\{v \mid ι_v λ ∧ ζ = 0\} ⊂ T_x O$ is 1D. Is there a primitive generator? What is the affine structure on $TO$?
+We may choose a basis $(λ=ξ_2,ξ_3,…,ξ_n)$.
+Then $(ξ_3, … , ξ_n)$ is a free $T^{n-2}$ action on $U$.
+Additionally choose $f_1$ such that $f = (f_1,f_2,…,f_n)$ is locally a chart of $U$.
+For a point $n ∈ N ∩ U$, we call such a chart \textbf{almost integral affine chart} at $n$.
 
+While an integral affine chart is unique up to integral affine transform, an almost integral affine chart is unique up to an affine transform with linear part
+\[ \mqty{a & 0 & 0 \\ b & 1 & u \\ 0 & 0 & A} \]
+where $a,b ∈ ℝ, u^T ∈ ℤ^{n-2}, A ∈ GL(2,ℤ)$.
 
+For any open contractible set $x ⊂ U ∖ N$, the map $T_xO →$
+we have there is a vector field $v$ on $V$ such that $ι_v λ = ι_v ζ = 0$ and $ι_v µ = 1$ where $μ ∈ 𝒫(V)$ such that the action $μ ∧ λ ∧ ζ ∈ ⋀^n 𝒫(V) ≅ ℤ$ is free.\todo{Gibts das?}
+We say a point $n ∈ N$ is of type $(v,λ)$.
 
-\begin{lemma}[{\cite[Theorem~2.26]{evans2021atfs}}]
-  If $f \colon X → B$ and $g \colon Y → B$ are regular Lagrangian fibrations over the same base, both admitting global Lagrangian sections $σ$ and $τ$.
-  Then there is a unique fibred symplectomorphism $Φ \colon X → Y$ such that $Φ ∘ σ = τ$.
+\begin{lemma}[Monodromy]
+  In the setting above $π_1(U ∖ N) = ℤ$ and acts on the stalks of $𝒫$ by the linear map \[\id + vλ \;.\]
 \end{lemma}
 
-\todo{What is a focus-focus singularity?}
+\begin{proof}
+  Symplectic reduction along some primitive $ζ ∈ ⋀^{n-2}(𝒫(U))$ reduces this to the 2-dimensional case.
+\end{proof}
 
-\begin{definition}[{\cite[Definition~8.1]{evans2021atfs}}]
-  An almost toric fibration is a Lagrangian fibration $f \colon X → B$ on a $2n$-dimensional symplectic manifold such that $B$ is also a smooth manifold (with corners), and for $d ∈ \{1,…,n-3,n-1\}$ the $d$-stratum $S_d(B)$ consist of toric critical points, and the $S_{n-2}$ consist of toric and focus-focus critical points.
-\end{definition}
+\begin{lemma}[Nodal slide]
 
-\begin{lemma}[{\cite[Remark~6.9]{evans2021atfs}}]
-  Let $N ⊂ B$ be the $n-2$ dimensional submanifold consisting of focus-focus singularites. Then the monodromy generated by a small loop around a point $x ∈ N$ in $B^\text{reg}$ is given by a shear map of the form
-  \[
-    S_{v,λ} = \id + vλ \; .
-  \]
 \end{lemma}
 
-Let $B^\text{reg}$ be the set of regular values of an almost toric fibration $f$, $\tilde{B^\text{reg}}$ its universal cover and let $I \colon \tilde{B^\text{reg}} → ℝ^n$ be the flux map. Let $D ⊂ \tilde{B^\text{reg}}$ be a fundamental domain for the action of $π_1(B^\text{reg})$.
 
 \section{Resolution Groups}
 
