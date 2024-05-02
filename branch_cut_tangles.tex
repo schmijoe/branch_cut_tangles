@@ -214,58 +214,29 @@ If $𝓊 = ([c,d],u,μ), 𝓋 =([a,b],v,λ)$ satisfy $[a,b] = [c,d]$ as sets, we
 
 \subsection{Neighbourhood of a focus-focus fibre}
 
-Let $π \colon (X,ω) → O$ be an almost toric fibration.
+Let $π \colon (X,ω) → O$ be an almost toric fibration, and $N ⊂ O$ the set of nodes.
 
-Then by \cite[Proposition~5.4]{Zun96} the set $N$ of (codimension 2 non-degenerate topologically stable) focus-focus singular values in $B$ is a $n-2$ dimensional submanifold called \textbf{nodes} of $π$.
+Let $π_0 \colon (X_0,ω_0) → O_0$ be an almost toric fibration where the base $O_0$ is a disk with a single focus-focus fibre at $0$.
+Also let $π_1 \colon (D^n × T^n, ω_1) → D^n$ be the projection onto the first coordinate, where $ω_1$ is the usual symplectic form.
 
-For some open set $U ⊂ O$, given a covector field $ξ ∈ T^*U$, we get a Hamiltonian $ℝ$-action $φ_ξ^t$ on $π^{-1}(U)$ by the Hamiltonian vector field $ι_{X_ξ} ω = d(f ∘ π) = ξ ∘ Dπ$, as locally we may write $ξ=df$.
-We define the \textbf{affine monodromy sheaf} $𝒫$ by setting
-\[𝒫(U) = \{ξ ∈ Γ(T^*U) \mid φ_ξ^1 = \id \} \; ,\]
-and its dual $𝒫^*$ by
-\[𝒫^*(U) = \{ v ∈ Γ(TU) \mid ∀ ξ ∈ 𝒫(U)\colon ξv ∈ ℤ  \} \; .\]
 
-\begin{remark}
-  Equivalently, we may also define $𝒫$ as the sheaf of system-preserving Hamiltonian $S¹$-actions, as is quickly verified.
-  Thus the $𝒫$ is indeed the same thing as the \emph{affine monodromy sheaf} in \cite{Zun03}.
-  The letter $𝒫$ comes from the fact that $𝒫(U)$ marks the periodic Hamiltonian $ℝ$-actions in $T^*U$, in analogy of the \emph{period lattice} (see e.g.\ \cite[Section 1.4]{Eva19}).
-
-  As well as identifying $𝒫(U)$ with system-preserving $S¹$-actions, we may identify $𝒫(U)^k$ with system-preserving $T^k$-actions.
-\end{remark}
-
-If $U ⊂ O ∖ N$ (thus only containing regular and elliptic values) is open and contractible, then $𝒫(U) ≅ 𝒫^*(U) ≅ ℤ^n$ and a basis $(ξ_1,…,ξ_n)$ of $𝒫(U)$ locally defines an \textbf{integral affine chart} $f=(f_1,…,f_n)$ up to a constant $c ∈ ℝ^n$ by choosing $df_i = ξ_i$.
-In the case where $U$ only contains regular values this is the classical Arnold-Liouville Theorem, the case with elliptic values is treated in e.g.\ \cite{DuMo91}.
-See also the discussion around \cite[Theorem 3.9]{Zun96}.
-Replacing the smooth atlas of $O ∖ N$ by affine charts, $O ∖ N$ is an integral affine manifold.\footnote{The atlas defined by such charts may not be compatible with the original smooth structure of $O$ near $∂O$…}
-
-While we cannot extend the integral affine structure or action coordinates to $N$, we can at least do so partially:
-Let $U ⊂ O$ be open and contractible such that $N ∩ U$ is non-empty and connected.
-By \cite[Proposition 5.2 a)]{Zun96} $𝒫(U) ≅ ℤ^{n-1}$ and $𝒫^*(U) ≅ ℤ^{n-1} × ℝ$\todo{$ℝ$ komponente trivial??}.
-A basis $(ξ_2,…,ξ_n)$ of $𝒫(U)$ gives rise to $n-1$ action coordinates $(f_2,…,f_n)$.
-By \cite[Proposition 5.2 b) and Proposition 5.4 a)]{Zun96}, there is a unique $S¹$-action $λ ∈ 𝒫(U)$ fixing the set of focus-focus singularities in $π^{-1}(U)$ pointwise and which is free elsewhere.
-We may choose a basis $(λ=ξ_2,ξ_3,…,ξ_n)$.
-Then $(ξ_3, … , ξ_n)$ is a free $T^{n-2}$ action on $U$.
-Additionally choose $f_1$ such that $f = (f_1,f_2,…,f_n)$ is locally a chart of $U$.
-For a point $n ∈ N ∩ U$, we call such a chart \textbf{almost integral affine chart} at $n$.
-
-While an integral affine chart is unique up to integral affine transform, an almost integral affine chart is unique up to an affine transform with linear part
-\[ \mqty{a & 0 & 0 \\ b & 1 & u \\ 0 & 0 & A} \]
-where $a,b ∈ ℝ, u^T ∈ ℤ^{n-2}, A ∈ GL(2,ℤ)$.
-
-For any open contractible set $x ⊂ U ∖ N$, the map $T_xO →$
-we have there is a vector field $v$ on $V$ such that $ι_v λ = ι_v ζ = 0$ and $ι_v µ = 1$ where $μ ∈ 𝒫(V)$ such that the action $μ ∧ λ ∧ ζ ∈ ⋀^n 𝒫(V) ≅ ℤ$ is free.\todo{Gibts das?}
-We say a point $n ∈ N$ is of type $(v,λ)$.
-
+Let $\{N_i\}_{i ∈ I}$ be the connected components of $N$.
 \begin{lemma}[Monodromy]
-  In the setting above $π_1(U ∖ N) = ℤ$ and acts on the stalks of $𝒫$ by the linear map \[\id + vλ \;.\]
+  For any $N_i$ the monodromy of a positive loop in $O ∖ N$ around $N_i$ is given by
+  $\id + v_i(x) λ_i(x)$
+  for $v_i(x) ∈ T_xO, λ_i(x) ∈ T_x^*O$.
+  $v_i$ and $λ_i$ define smooth (co-)vector fields on a neighbourhood of $N_i$.
 \end{lemma}
 
 \begin{proof}
-  Symplectic reduction along some primitive $ζ ∈ ⋀^{n-2}(𝒫(U))$ reduces this to the 2-dimensional case.
+By \cite[Proposition 5.4 b)]{Zun96} for any $x ∈ N_i$ there is a neighbourhood $U$ of $x$ such that $π\colon π^{-1}(U) → U$ is fibrewise diffeomorphic via $φ$ to $(π_0, π_1) \colon X_0 × (D^n × T^n) → O_0 × D^n$.
+And let $(f_1,f_2)$ be coordinates on $O_0$ such that $f_2∘π$ generates the unique $S¹$-action on $X_0$ which is free outside of the singularities.
+
+Then $λ = φ^* df_2$
+
 \end{proof}
 
-\begin{lemma}[Nodal slide]
-
-\end{lemma}
+We say $N_i$ has type $(v_i,λ_i)$
 
 
 \section{Resolution Groups}
