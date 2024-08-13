@@ -132,14 +132,14 @@ Refname={Theorem,Theorems}]{maintheorem}
 \newcommand\mqty[1]{\begin{pmatrix}#1\end{pmatrix}}
 
 \begin{document}
-\title{Branch Cut Tangles}
+\title{Branch Cut Tangles Part I: Four dimensions from two}
 \author{Joel Schmitz}
 \maketitle
 
 \section{Tangles Replace Mutations}
 
 We want to give an exposition of the papers ideas in the $4$-dimensional case.
-To do so, we will introduce a slightly different viewpoint on the concepts of base diagram and nodal slide, which is well-suited for generalization later in \cref{sec:general_atfs}.
+To do so, we will introduce a slightly different viewpoint on the concepts of base diagram and nodal slide, which is well-suited for generalization later in \todo{THE FUUUUTARE}.
 
 Let $X$ be a 4-dimensional symplectic manifold and $π \colon X → B$ be an almost toric fibration.
 As described in \cite{evans2021atfs}, there is a set $N ⊂ B$ of isolated nodes, such that for every $n ∈ N$, the fibre $π^{-1}(n)$ contains a exactly one\footnote{This is a (technically unnecessary) assumption, which mainly serves to produce easier to read diagrams later on.} focus-focus critical point of $π$.
@@ -184,16 +184,121 @@ A nodal slide allows one to locally modify the fibration $π$ such that a node $
 See \cite[Theorem 6.5]{symington2002FourDF} or \cite[Theorem 8.10]{evans2021atfs} for a proof.
 
 \paragraph{Base diagrams \& Tangles}
-We adopt a slightly different notion of base diagram than used in e.g. \cite{symington2002FourDF,evans2021atfs}:
+
+We adopt a different notion of base diagram than used in e.g. \cite{symington2002FourDF,evans2021atfs}. While it serves the same purpose, it is sufficiently different to merit its own name:
 
 \begin{definition}
-  Let $U ⊂ B$ be open. A \textbf{base diagram} of $U$ is a homeomorphism $φ \colon U → ℝ²$ that is piecewise linear on $U ∖ N$.
+  Let $U ⊂ B$ be open, connected.
+  A \textbf{nodal chart} of $U$ is a homeomorphism $φ \colon U → ℝ²$ that is piecewise integral affine on $U ∖ N$.
 \end{definition}
 
-\section{Resolution Groups}
+The piecewise integral affine condition ensures that on the integral affine locus, $π ∘ φ$ gives action coordinates in a neighbourhood of $(φ ∘ π)^{-1}(x)$.
+More generally, for any point $x$ in $φ(B ∖ N)$, there exists an invertible piecewise integral affine map $S_x\colon ℝ² → ℝ²$ such that $S_x ∘ φ$ is integral affine near $x$, i.e. $S_x ∘ φ ∘ π$ gives action coordinates in a neighbourhood of $(φ ∘ π)^{-1}(x)$. (On the integral affine parts we may choose $S_x = \id$.)
+We call $S_x$ a \textbf{resolution map at $x$}.
+It is unique up to composing with an integral affine map.
 
-Ask Virginie Charette, William Goldman
+The non-affine locus of $φ$ in $\im φ$ is made up of line segments\footnote{Here we include rays and lines in the definition of line segment.}, which we call \textbf{branch cuts}.
+If the branch cuts don't intersect and only have endpoints in nodes or $φ(∂B ∩ U)$, we call $φ$ \textbf{tangle-free}.
 
-\emergencystretch=1em
-\printbibliography
+\begin{remark}
+  \label{rem:bc_resolution}
+  Suppose $x$ is a point in the interior of a branch cut $𝓁$. W.l.o.g.\ we assume $x = 0 ∈ ℝ²$.
+Then its resolution map $S_x$ is given by two affine maps that agree on $𝓁$.
+W.l.o.g.\ we may take one of them to be the identity.
+Then the other one must fix $𝓁$, and thus is an integral shear map, and we can write
+\[
+  S_x(y) = \begin{cases}
+    y - k v\det(v,y) & \text{if } \det(v,y) ≥ 0 \\
+    y & \text{if } \det(v,y) ≤ 0
+  \end{cases} \; ,
+\]
+where $v$ is a primitive vector, and $k$ a positive integer.
+\end{remark}
+
+\begin{example}[From tangle-free to tangled]
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      \begin{scope}[shift={(0,0)}]
+        \fill[opacity=0.1] (-1,1) rectangle (2.5,-1);
+        \draw[red,->] (-1,-1) -- (-0.5,-0.5) node[anchor=west] {$a$};
+        \draw[green!50!black,->] (-1,1) -- (-0.5,0.5) node[anchor=west] {$b$};
+        \draw[blue,->] (2.5,-1) -- (2,-0.5) node[anchor=east] {$c$};
+        \fill (0,0) circle[radius=.7pt] node[anchor=north west] {$x$};
+        \draw[thick] (-1,1) rectangle (2.5,-1);
+        \node at (.75,-1) [anchor=north] {a)};
+      \end{scope}
+      \begin{scope}[shift={(4,0)}]
+        \fill[opacity=0.1] (-1,1) rectangle (2.5,-1);
+        \draw[red,->] (-1,-1) -- (0.5,0.5) node[anchor=south] {$a$};
+        \draw[green!50!black,->] (-1,1) -- (-0.5,0.5) node[anchor=west] {$b$};
+        \draw[blue,->] (2.5,-1) -- (2,-0.5) node[anchor=east] {$c$};
+        \fill (0,0) circle[radius=.7pt] node[anchor=north west] {$x$};
+        \draw[thick] (-1,1) rectangle (2.5,-1);
+        \node at (.75,-1) [anchor=north] {b)};
+      \end{scope}
+      \begin{scope}[shift={(8,0)}]
+        \fill[opacity=0.1] (-1,1) rectangle (2.5,-1);
+        \draw[red,->] (-1,-1) -- (0.5,0.5) node[anchor=south] {$a$};
+        \draw[green!50!black,->] (-1,1) -- (-.03,.03) (.1,.03) -- (.9,.3)  node[anchor=west] {$b$};
+        \draw[blue,->] (2.5,-1) -- (2,-0.5) node[anchor=east] {$c$};
+        \fill (0,0) circle[radius=.7pt] node[anchor=north west] {$x$};
+        \draw[thick] (-1,1) rectangle (2.5,-1);
+        \node at (.75,-1) [anchor=north] {c)};
+      \end{scope}
+      
+      \begin{scope}[shift={(0,-3)}]
+        \fill[opacity=0.1] (-1,1) rectangle (2.5,-1);
+        \draw[red,->] (-1,-1) -- (0,0)  (.3,.06) -- (2,0.4) node[anchor=south] {$a$};
+        \draw[red,densely dashed] (0,0) -- (0.5,0.5) arc (135:-45:.03) -- (0.15+.04,.15-0.04);
+        \draw[green!50!black,->] (-1,1) -- (-.03,.03) (.1,.03) -- (.9,.3)  node[anchor=south] {$b$};
+        \draw[blue,->] (2.5,-1) -- (2,-0.5) node[anchor=east] {$c$};
+        \fill (0,0) circle[radius=.7pt] node[anchor=north west] {$x$};
+        \draw[thick] (-1,1) rectangle (2.5,-1);
+        \node at (.75,-1) [anchor=north] {d)};
+      \end{scope}
+      \begin{scope}[shift={(4,-3)}]
+        \fill[opacity=0.1] (-1,1) rectangle (2.5,-1);
+        \draw[red,->] (-1,-1) -- (0.5,0.5) arc (135:-45:.03) -- (0.15+.04,.15-0.04) (.3,.06) -- (2,0.4);
+        \draw[green!50!black,->] (-1,1) -- (-.03,.03) (.1,.03) -- (.9,.3);
+        \draw[blue,->] (2.5,-1) -- (1.5-0.22,0.22) (1.25,0.25) ++(0.11,0.04) -- ++(1.1,0.4);
+        \draw[thick] (-1,1) rectangle (2.5,-1);
+        \node at (.75,-1) [anchor=north] {e)};
+      \end{scope}
+      \begin{scope}[shift={(8,-3)}]
+        \node at (.75,0) {…};
+      \end{scope}
+    \end{tikzpicture}
+    \caption{Introducing tangles into a tangle-free nodal chart.}
+    \label{fig:building_tangles}
+  \end{figure}
+  This example shall motivate the proceeding and following definitions.
+
+  Take a look at \cref{fig:building_tangles} a).
+  There are three branch cuts, drawn as coloured lines.
+  They have endpoints in three nodes $a,b,c$, marked by arrow tips.
+  This diagram provides action coordinates everywhere except on the nodes and the branch cuts.
+
+  Since $φ$ is a homeomorphism (meaning the diagram "closes up" as in \cite[Section 7.2]{evans2021atfs}, the direction of the branch cuts ending in the nodes corresponds to the nodes' monodromy vector field $v$, with the arrow tip indicating its direction.
+
+
+  Let's modify $π$ and $φ$ by nodal slides to introduce a few "tangles": First slide $a$ such that its branch cut is "in front of" $b$, ass seen in \cref{fig:building_tangles} b).
+  In doing so we modified the integral affine structure along $a$'s branch cut. 
+  The resolution map at the marked point $x$ is now no longer trivial since $x$ sits on a branch cut.
+  See below how it can be calculated.
+
+  Moving on for now, we can slide $b$ along its eigendirection, past the point $x$.
+  As our nodal chart $φ$ as a "break" in the integral affine structure, the straight line segment in $B$ along which we slide $b$ appears to bend in $\im φ$ at the point $x$.
+  We get \cref{fig:building_tangles} c).
+  Since we modified the integral affine structure around $φ^{-1}(x)$, the resolution map at $x$ once again changed.
+
+  Sliding $a$ back through $x$, it is once again deflected, giving \cref{fig:building_tangles} d).
+  The dashed part of the red line hooking back into $x$ is only there to illustrate which order of nodal slides we took to get to diagram d), not an actual branch cut.
+  However we will usually also draw it solidly.
+  
+  Proceeding in the same manner we can continue to tangle up our $π$ and $φ$...
+\end{example}
+
+
+
 \end{document}
