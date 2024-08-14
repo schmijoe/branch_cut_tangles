@@ -185,34 +185,38 @@ See \cite[Theorem 6.5]{symington2002FourDF} or \cite[Theorem 8.10]{evans2021atfs
 
 \paragraph{Base diagrams \& Tangles}
 
-We adopt a different notion of base diagram than used in e.g. \cite{symington2002FourDF,evans2021atfs}. While it serves the same purpose, it is sufficiently different to merit its own name:
+We adopt a different notion of base diagram than used in e.g. \cite{symington2002FourDF,evans2021atfs}.
+While it serves a similar purpose, it is sufficiently different to merit its own name:
 
 \begin{definition}
   Let $U ⊂ B$ be open, connected.
   A \textbf{nodal chart} of $U$ is a homeomorphism $φ \colon U → ℝ²$ that is piecewise integral affine on $U ∖ N$.
 \end{definition}
 
-The piecewise integral affine condition ensures that on the integral affine locus, $π ∘ φ$ gives action coordinates in a neighbourhood of $(φ ∘ π)^{-1}(x)$.
+The piecewise integral affine condition ensures that for a point $x ∈ \im φ$ in the integral affine locus, $π ∘ φ$ gives action coordinates in a neighbourhood of $(φ ∘ π)^{-1}(x)$.
 More generally, for any point $x$ in $φ(B ∖ N)$, there exists an invertible piecewise integral affine map $S_x\colon ℝ² → ℝ²$ such that $S_x ∘ φ$ is integral affine near $x$, i.e. $S_x ∘ φ ∘ π$ gives action coordinates in a neighbourhood of $(φ ∘ π)^{-1}(x)$. (On the integral affine parts we may choose $S_x = \id$.)
 We call $S_x$ a \textbf{resolution map at $x$}.
 It is unique up to composing with an integral affine map.
 
-The non-affine locus of $φ$ in $\im φ$ is made up of line segments\footnote{Here we include rays and lines in the definition of line segment.}, which we call \textbf{branch cuts}.
-If the branch cuts don't intersect and only have endpoints in nodes or $φ(∂B ∩ U)$, we call $φ$ \textbf{tangle-free}.
+The non-affine locus of $φ$ in $\im φ$ is the union of closed line segments\footnote{Here we include closed rays and lines in the definition of closed line segment.}, which we call \textbf{branch cuts}.
+We can think of it as a "graph" $G$\todo{Is this a tropical curve?}, where the edges are branch cuts.
+We used quotation marks as we also allow rays and lines to be "edges" of the "graph".
+If the only vertices of $G$ are leaves (i.e. nodes or on vertices on $φ(∂B ∩ U)$), we call $φ$ \textbf{tangle-free}.
 
 \begin{remark}
   \label{rem:bc_resolution}
   Suppose $x$ is a point in the interior of a branch cut $𝓁$. W.l.o.g.\ we assume $x = 0 ∈ ℝ²$.
-Then its resolution map $S_x$ is given by two affine maps that agree on $𝓁$.
+Then its resolution map $S_x$ is given by two integral affine maps that agree on $𝓁$.
 W.l.o.g.\ we may take one of them to be the identity.
-Then the other one must fix $𝓁$, and thus is an integral shear map, and we can write
-\[
-  S_x(y) = \begin{cases}
+Then the other one must fix $𝓁$, and thus is an integral shear map, so $S_x$ must be equal to the "half-shear"
+\begin{equation}
+  \label{eq:half_shear}
+  S_v^k(y) = \begin{cases}
     y - k v\det(v,y) & \text{if } \det(v,y) ≥ 0 \\
     y & \text{if } \det(v,y) ≤ 0
   \end{cases} \; ,
-\]
-where $v$ is a primitive vector, and $k$ a positive integer.
+\end{equation}
+where $v$ is a primitive vector along $𝓁$ (corresponding to an orientation of $𝓁$), and $k$ a positive integer.
 \end{remark}
 
 \begin{example}[From tangle-free to tangled]
@@ -285,14 +289,16 @@ where $v$ is a primitive vector, and $k$ a positive integer.
   Let's modify $π$ and $φ$ by nodal slides to introduce a few "tangles": First slide $a$ such that its branch cut is "in front of" $b$, ass seen in \cref{fig:building_tangles} b).
   In doing so we modified the integral affine structure along $a$'s branch cut. 
   The resolution map at the marked point $x$ is now no longer trivial since $x$ sits on a branch cut.
-  See below how it can be calculated.
+  Concretely, let $v_1 = \mqty{1\\1}$, then $S_x = S_{v_1}$, with $S_{v_1}$ as in \eqref{eq:half_shear}.
 
   Moving on for now, we can slide $b$ along its eigendirection, past the point $x$.
-  As our nodal chart $φ$ as a "break" in the integral affine structure, the straight line segment in $B$ along which we slide $b$ appears to bend in $\im φ$ at the point $x$.
+  As our nodal chart $φ$ as a "break" in the integral affine structure described by the resolution map $S_x$, the straight line segment in $B$ along which we slide $b$ appears to bend in $\im φ$ at the point $x$.
+  Concretely the incoming vector $v_2' = \mqty{1\\-1}$ exits $x$ as $v_2 = \mqty{3\\1}$.(One can be determined from the other by the condition $S_x(-v_2') = -S_x(v_2)$, which expresses that the nodal slide should be straight with respect to the integral affine structure.)
   We get \cref{fig:building_tangles} c).
-  Since we modified the integral affine structure around $φ^{-1}(x)$, the resolution map at $x$ once again changed.
+  Since we modified the integral affine structure around $φ^{-1}(x)$, the resolution map at $x$ once again changed: It now is the composition $S_{v_2} ∘ S_{v_1}$.
 
   Sliding $a$ back through $x$, it is once again deflected, giving \cref{fig:building_tangles} d).
+As in the paragraph above we determine the outgoing vector $v_3$ pointing from $x$ to the node $a$ to be $v_3 = \mqty{5\\1}$, giving the new resolution map $S_x = S_{v_3} ∘ S_{v_2} ∘ S_{v_1}$.
   The dashed part of the red line hooking back into $x$ is only there to illustrate which order of nodal slides we took to get to diagram d), not an actual branch cut.
   However we will usually also draw it solidly.
   
@@ -300,5 +306,42 @@ where $v$ is a primitive vector, and $k$ a positive integer.
 \end{example}
 
 
+
+\begin{definition}
+  A \textbf{branch cut tangle} is a nodal chart $φ \colon B ⊃ U → ℝ²$ where all branch cuts and non-leave vertices of $G$ are labelled as follows:
+  \begin{enumerate}
+    \item A branch cut is labelled $(k,v)$, such that for $x ∈ 𝓁$ in the interior of $𝓁$, $S_x = S^k_v$ as given in \eqref{eq:half_shear}.
+    \item A non-leave vertex $x$ is labelled by a list $((k_1,v_1), …, (k_n,v_n))$ such that $S_x = S^{k_n}_{v_n} ∘ … ∘ S^{k_1}_{v_1}$.
+      We call such a point with its list a \textbf{local tangle}.\todo{Or better branch cut stack?)}
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  Obvious question: Is every nodal chart a branch cut tangle? I.e. can every piecewise integral \emph{linear} map be decomposed as a series of half-shears?.
+\end{remark}
+
+\section{Displacement energy of fibres in toric manifolds.}
+
+We will use a bit of tropical geometry in this section.
+If you are unfamiliar with the topic, you may wish to read \cite[Sections 1-2]{BruSha14}, which gives a nice overview of the needed language.
+For $x,y ∈ ℝ ∪ \{+∞\}$ we write $x ⊕ y ≔ \min{x,y}$ for the tropical addition and $x ⊗ y = x+y$ for tropical multiplication.
+For $x ∈ (ℝ ∪ \{+∞\})²$ and $λ ∈ ℤ²$ we write $x^{⊗λ} = x_1^{⊗λ_1} ⊗ x_2^{⊗λ_2} = ⟨λ,x⟩$.
+
+Let $μ \colon (X,ω) → Δ ⊂ ℝ²$ be a toric manifold with moment map $μ$.
+According to the Atiyah-Guillemin-Sternberg convexity theorem \cite{Ati82,GuiSte82}, we can write
+\[Δ = \{x ∈ ℝ² \mid \min_{1 ≤ i ≤ n}\{𝓁_i(x)\} ≥ 0 \} \; ,\]
+where $n ≥ 0$ and $𝓁_i = ⟨λ_i, ·⟩ + c_i, λ_i ∈ ℤ², c_i ∈ ℝ$ are integral affine functions $ℝ² → ℝ$, satisfying the Delzant condition, i.e. if $x ∈ ∂Δ$ and $𝓁_i(x) = 𝓁_j(x) = 0$, then $\det(λ_i,λ_j) = ±1$.
+In other words, there exists a tropical polynomial in two variables
+\[Q(x) = ⨁_{1 ≤ i ≤ n} c_i ⊗ x^{⊗λ_i}\]
+such that $Δ = \{Q(x) ≥ 0\}$ and all edges of the tropical curve $C$ given by $Q$ which intersect $∂Δ = \{Q(x) = 0\}$ have weight $1$.
+
+\begin{theorem}
+  Let $x ∈ Δ ∖ C$.
+  Then $e(μ^{-1}(x)) = Q(x)$, and there exists a almost toric fibration $π\colon X → B$ and a symmetric probe $P ⊂ B$ that displaces $μ^{-1}(x)$ with energy $Q(x)$.
+\end{theorem}
+
+Probes where introduces by McDuff in \cite{mcduff2011displacing} in the context of toric manifolds.
+Here we take a probe in an almost toric fibration to be a straight line segment $P ⊂ B ∖ N$ s.t.\ $P$ intersects the toric boundary $∂B$ integrally transversely, $P$ has no self intersections.
+That way we can choose action-coordinates on a contractible neighbourhood $P$ where one can perform the symplectic reduction.
 
 \end{document}
